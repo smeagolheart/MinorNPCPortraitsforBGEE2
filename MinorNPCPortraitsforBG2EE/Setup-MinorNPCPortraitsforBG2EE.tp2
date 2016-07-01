@@ -3,13 +3,12 @@ AUTHOR ~Smeagolheart&bob_veng@forum.baldursgate.com~
 VERSION ~1.0~
 //README ~%MOD_FOLDER%/readme.txt~
 
-
 /*
 pic size: 169x266
 */
 
 BEGIN ~Minor NPC Portraits for BG2EE~
-	REQUIRE_PREDICATE GAME_IS ~bg2ee eet~ "This mod requires BG2:EE"
+	REQUIRE_PREDICATE GAME_IS ~bg2ee eet~ "This mod requires BG2:EE or EET"
 	DESIGNATED 0
 
 	//Creature name and portrait name match
