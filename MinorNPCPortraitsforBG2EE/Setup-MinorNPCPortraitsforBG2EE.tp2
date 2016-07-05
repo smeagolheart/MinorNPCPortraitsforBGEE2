@@ -2,7 +2,6 @@ BACKUP ~MinorNPCPortraitsforBG2EE/backup~
 AUTHOR ~Smeagolheart&bob_veng@forum.baldursgate.com~
 VERSION ~1.0~
 //README ~%MOD_FOLDER%/readme.txt~
-
 /*
 pic size: 169x266
 */
@@ -13,7 +12,7 @@ BEGIN ~Minor NPC Portraits for BG2EE~
 
 	PRINT ~Please be patient this may take a while ...~
 	OUTER_SET s9total=0	
-// /*	
+
 	// copy over IRENICUS additional sized portraits....
 	COPY ~%MOD_FOLDER%/portraits/NJONL.bmp~ ~override~
 	COPY ~%MOD_FOLDER%/portraits/NJONS.bmp~ ~override~	
@@ -71,9 +70,24 @@ BEGIN ~Minor NPC Portraits for BG2EE~
 					END
 				END
 			END
-//	*/
+
+	//Count them up :)
+	PRINT ~-------------------------------------------------------------~
+	PRINT ~ APPLIED PORTRAITS TO %s9total% ACTORS~
+	PRINT ~-------------------------------------------------------------~
+
+BEGIN ~NPCs without Portraits Get Random Portraits~
+	REQUIRE_PREDICATE GAME_IS ~bg2ee eet~ "This mod requires BG2:EE or EET"
+	DESIGNATED 100
+	
+	//Assign Random Portraits
+	OUTER_SET male_cnt = 0
+	OUTER_SET female_cnt = 0
+	OUTER_SET female_cnt = 0
+	OUTER_SET rnd_cnt = 0
+	
 	DEFINE_ACTION_MACRO ~GetRandomMale~ BEGIN
-		ACTION_IF male_cnt > 32 THEN BEGIN			// Rewind count back to the first if the last number portrait has been reached
+		ACTION_IF male_cnt > 32 THEN BEGIN				// Rewind count back to the first if the last number portrait has been reached
 			OUTER_SET male_cnt=1
 		END
 		PRINT ~PATCHING: %Crename%.cre with RANDOM PORTRAIT: MALE%male_cnt%.bmp~
@@ -94,15 +108,8 @@ BEGIN ~Minor NPC Portraits for BG2EE~
 		COPY_EXISTING ~%Crename%.cre~ ~override~
 			WRITE_EVALUATED_ASCII 0x34 ~FEMALE%female_cnt%~ #8
 		END
-	END	
-	
-	
-	//Assign Random Portraits
-	OUTER_SET male_cnt = 0
-	OUTER_SET female_cnt = 0
-	OUTER_SET female_cnt = 0
-	OUTER_SET rnd_cnt = 0
-	
+	END			
+
 	COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
 		READ_STRREF 0x000c Crename ELSE 0
 		READ_ASCII 0x02cc dialoguefile ELSE 0
@@ -137,10 +144,6 @@ BEGIN ~Minor NPC Portraits for BG2EE~
 		BUT_ONLY
 			
 	//Count them up :)
-	OUTER_SET total_cnt = ~%rnd_cnt%~ + ~%s9total%~
 	PRINT ~-------------------------------------------------------------~
-	PRINT ~ APPLIED PORTRAITS TO %s9total% ACTORS~
 	PRINT ~ APPLIED RANDOM PORTRAITS TO %rnd_cnt% ACTORS~	
 	PRINT ~-------------------------------------------------------------~
-	PRINT ~TOTAL ACTORS WITH PORTRAITS: %total_cnt% ~
-	
